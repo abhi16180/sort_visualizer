@@ -5,4 +5,4 @@ A new Flutter project.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-<img src='assets/images/background.png'>
+<img src='assets/images/background.jpeg'>
