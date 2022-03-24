@@ -62,9 +62,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     child: Text(
                       widget.sortType.toString(),
                       style: const TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'sfui'),
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'sfui',
+                      ),
                     ),
                   ),
                 ],

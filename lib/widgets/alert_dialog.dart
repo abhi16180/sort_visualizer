@@ -71,20 +71,54 @@ class _EnterDataState extends State<EnterData> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  dataController.data.value = _dataHandler.text
-                      .split(' ')
-                      .toList()
-                      .map((e) => int.parse(e))
-                      .toList();
+                  try {
+                    _dataHandler.text == ''
+                        ? dataController.data.value = []
+                        : dataController.data.value = _dataHandler.text
+                            .split(' ')
+                            .toList()
+                            .map((e) => int.parse(e))
+                            .toList();
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainScreen(
-                        sortType: widget.sortType,
+                    if (dataController.data.value.length > 5) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(
+                            sortType: widget.sortType,
+                          ),
+                        ),
+                      );
+                    } else {
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Color.fromARGB(255, 48, 172, 230),
+                          content: Text(
+                            'Please enter valid values',
+                            style: TextStyle(
+                              fontFamily: 'sfui',
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Color.fromARGB(255, 48, 172, 230),
+                        content: Text(
+                          e.toString(),
+                          style: const TextStyle(
+                            fontFamily: 'sfui',
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
                 child: const Text(
                   'Go',

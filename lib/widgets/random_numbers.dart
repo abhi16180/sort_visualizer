@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sort_visualizer/controller/controller.dart';
 import 'package:sort_visualizer/mainscreen.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 
 // ignore: must_be_immutable
 class RandomNumbersGenerator extends StatefulWidget {
@@ -122,18 +123,50 @@ class _RandomNumbersGeneratorState extends State<RandomNumbersGenerator> {
                   clipBehavior: Clip.antiAlias,
                   child: MaterialButton(
                     onPressed: () {
-                      lowerLimit = int.parse(_lowerLimitController.text);
-                      higherLimit = int.parse(_higherLimitController.text);
-                      size = int.parse(_arraySizeController.text);
-                      if (lowerLimit < higherLimit) {
-                        generateRandomList(lowerLimit, higherLimit, size);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScreen(
-                                      sortType: widget.sortType,
-                                    )));
-                      } else {}
+                      try {
+                        lowerLimit = int.parse(_lowerLimitController.text);
+                        higherLimit = int.parse(_higherLimitController.text);
+                        size = int.parse(_arraySizeController.text);
+                        if (lowerLimit < higherLimit && size >= 10) {
+                          generateRandomList(lowerLimit, higherLimit, size);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen(
+                                        sortType: widget.sortType,
+                                      )));
+                        } else {
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor:
+                                  Color.fromARGB(255, 48, 172, 230),
+                              content: Text(
+                                'Please enter valid values',
+                                style: TextStyle(
+                                  fontFamily: 'sfui',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor:
+                                const Color.fromARGB(255, 48, 172, 230),
+                            content: Text(
+                              e.toString(),
+                              style: const TextStyle(
+                                fontFamily: 'sfui',
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: const Text(
                       'Go',
