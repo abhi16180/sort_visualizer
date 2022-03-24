@@ -3,9 +3,9 @@
 Simple flutter webapp to learn how basic sorting algorithms work with visualization.
 
 ## Getting Started
-Fork the project
-Clone 
-$ flutter run ->to run the app. 
+Fork the project<br>
+Clone <br>
+$ flutter run ->to run the app. <br>
 
-This project is a starting point for a Flutter application.
+
 <img src='assets/images/image.png'>
