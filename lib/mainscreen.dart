@@ -25,6 +25,28 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     animate();
   }
 
+  getTime() {
+    switch (widget.sortType.toString()) {
+      case "Selection Sort":
+        return "O(n2)";
+      case "Insertion Sort":
+        return "O(n2)";
+      case "Bubble Sort":
+        return "O(n2)";
+    }
+  }
+
+  getSpace() {
+    switch (widget.sortType.toString()) {
+      case "Selection Sort":
+        return "O(1)";
+      case "Insertion Sort":
+        return "O(1)";
+      case "Bubble Sort":
+        return "O(1)";
+    }
+  }
+
   animate() {
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
@@ -74,21 +96,45 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           ),
           preferredSize: Size(MediaQuery.of(context).size.width, 100)),
       body: Center(
-          child: Container(
-        margin: const EdgeInsets.only(right: 30),
-        child: Padding(
-            padding: const EdgeInsets.only(bottom: 200),
-            child: Obx(
-              () => CustomPaint(
-                // ignore: invalid_use_of_protected_member
-                painter: PaintSort(
-                  data: dataController.data.value,
-                  lineFraction: lineFraction,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 60.0,
+            ),
+            Container(
+              margin: const EdgeInsets.only(right: 30),
+              child: Padding(
+                padding:
+                    dataController.data.value.any((element) => element < 0) ==
+                            true
+                        ? EdgeInsets.only(bottom: 200, top: 100.0)
+                        : EdgeInsets.only(bottom: 20.0),
+                child: Obx(
+                  () => CustomPaint(
+                    // ignore: invalid_use_of_protected_member
+                    painter: PaintSort(
+                      data: dataController.data.value,
+                      lineFraction: lineFraction,
+                    ),
+                    child: Container(),
+                  ),
                 ),
-                child: Container(),
               ),
-            )),
-      )),
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: Obx(() => Text(dataController.data.value.join("  , "))),
+            ),
+            Text(
+              "Time Complexity : " + getTime(),
+            ),
+            Text(
+              "Space Complexity : " + getSpace(),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: MaterialButton(
         onPressed: () {
           switch (widget.sortType) {
